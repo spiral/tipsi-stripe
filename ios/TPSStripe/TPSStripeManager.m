@@ -898,6 +898,8 @@ RCT_EXPORT_METHOD(openApplePaySetup) {
 
 #undef simpleUnpack
 
+    NSString *cardholderName = [result.name copy];
+
     // Make a new address object, and fill it in with data before assigning it
     // Editing the fields on the assigned address won't do anything according to Stripe's docs
     STPAddress * address = [[STPAddress alloc] init];
@@ -908,6 +910,8 @@ RCT_EXPORT_METHOD(openApplePaySetup) {
     address.country = params[TPSStripeParam(CardParams, addressCountry)];
     address.postalCode = params[TPSStripeParam(CardParams, addressZip)];
     result.address = address; // Commit all the changes as a batch
+
+    result.name = cardholderName;
 
     return result;
 }
